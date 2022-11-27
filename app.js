@@ -5,10 +5,12 @@ const mailchimp = require("@mailchimp/mailchimp_marketing");
 // GLOBAL
 
 const app = express();
+
+// --- ENVIRONMENT ---
 const port = process.env.PORT;
-const key = process.env.mailchimpKey;
-const list = process.env.mailchimpList;
-const server = process.env.mailchimpServer;
+const key = process.env.MAILCHIMPKEY;
+const list = process.env.MAILCHIMPLIST;
+const server = process.env.MAILCHIMPSERVER;
 
 
 // APP CONFIGS
@@ -24,22 +26,15 @@ mailchimp.setConfig({
 const listId = list || "e7df3b715c";
 
 // -- TEST MAILCHIMP
-async function run() {
+async function testMailchimp() {
     const response = await mailchimp.ping.get();
     console.log(response);
 };
 
-run();
+testMailchimp();
 
 // iF EVERYTHINGS IS RUNNING OK, THEN THE RESPONSE SHOULD BE:
-// {
-//     "health_status": "Everything's Chimpy!"
-// }
-
-// MAILCHIMP LIST
-const newsLetter = {
-    name: "JFmartinez Newsletter",
-};
+// { "health_status": "Everything's Chimpy!" }
 
 
 // --- PAGES ---
@@ -72,7 +67,7 @@ app.post("/", (req, res) => {
 // --- LOGS ---
 
 app.listen(port || 3000, (req, res) => {
-    console.log(`App running on port ${port}`);
+    console.log(`App running on port ${port || 3000}`);
 });
 
 
