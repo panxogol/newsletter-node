@@ -1,14 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const request = require("request");
-// const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-const md5 = require("md5"); // To check user status
 
 // GLOBAL
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+const key = process.env.mailchimpKey;
+const list = process.env.mailchimpList;
+const server = process.env.mailchimpServer;
+
 
 // APP CONFIGS
 app.use(express.static(__dirname + "/static"));
@@ -16,11 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // MAILCHIMP CONFIGS
 mailchimp.setConfig({
-    apiKey: "bd5b39b768b0c19749d58377132d7e00-us17",
-    server: "us17",
+    apiKey: key || "bd5b39b768b0c19749d58377132d7e00-us17",
+    server: server || "us17",
 });
 
-const listId = "e7df3b715c";
+const listId = list || "e7df3b715c";
 
 // -- TEST MAILCHIMP
 async function run() {
@@ -73,8 +74,8 @@ app.post("/", (req, res) => {
 
 // --- LOGS ---
 
-app.listen(port, (req, res) => {
-    console.log(`App running on http://localhost:${port}`);
+app.listen(port || 3000, (req, res) => {
+    console.log(`App running on port ${port}`);
 });
 
 
