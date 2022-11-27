@@ -62,13 +62,10 @@ app.post("/", (req, res) => {
         email: email,
     };
 
-    try {
-        subscribeUser(userData);
-        res.sendFile(__dirname + "/static/html/succes.html");
-    } catch (e) {
+    subscribeUser(userData, res).catch((e) => {
         console.log(e);
         res.sendFile(__dirname + "/static/html/failure.html");
-    };
+    });
 });
 
 
@@ -81,22 +78,19 @@ app.listen(port || 3000, (req, res) => {
 
 
 // --- FUNCTIONS ---
-async function subscribeUser(subscribingUser) {
-    try {
-        const response = await mailchimp.lists.addListMember(listId, {
-            email_address: subscribingUser.email,
-            status: "subscribed",
-            merge_fields: {
-                FNAME: subscribingUser.firstName,
-                LNAME: subscribingUser.lastName,
-            },
-        });
+async function subscribeUser(subscribingUser, res) {
+    const response = await mailchimp.lists.addListMember(listId, {
+        email_address: subscribingUser.email,
+        status: "subscribed",
+        merge_fields: {
+            FNAME: subscribingUser.firstName,
+            LNAME: subscribingUser.lastName,
+        },
+    });
 
-        console.log(
-            `Successfully added contact as an audience member. The contact's id is ${response.id}.`
-        );
-    } catch (e) {
-        console.log(e);
-        return e;
-    };
+    console.log(
+        `Successfully added contact as an audience member. The contact's id is ${response.id}.`
+    );
+
+    res.sendFile(__dirname + "/static/html/failure.html")
 };
