@@ -87,5 +87,5 @@ async function subscribeUser(subscribingUser, res) {
         `Successfully added contact as an audience member. The contact's id is ${response.id}.`
     );
 
-    res.sendFile(__dirname + "/static/html/failure.html")
+    res.sendFile(__dirname + "/static/html/succes.html")
 };
