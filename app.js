@@ -65,6 +65,9 @@ app.post("/", (req, res) => {
     });
 });
 
+app.post("/failure", (req, res) => {
+    res.redirect("/");
+});
 
 // --- LOGS ---
 
