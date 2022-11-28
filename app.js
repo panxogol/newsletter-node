@@ -15,7 +15,6 @@ const key = process.env.MAILCHIMPKEY;
 const list = process.env.MAILCHIMPLIST;
 const server = process.env.MAILCHIMPSERVER;
 
-
 // APP CONFIGS
 app.use(express.static(__dirname + "/static"));
 app.use(bodyParser.urlencoded({ extended: true }));
