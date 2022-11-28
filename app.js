@@ -1,12 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
+const dotenv = require("dotenv");
+
 
 // GLOBAL
 
 const app = express();
 
 // --- ENVIRONMENT ---
+dotenv.config();
 const port = process.env.PORT;
 const key = process.env.MAILCHIMPKEY;
 const list = process.env.MAILCHIMPLIST;
@@ -19,11 +22,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // MAILCHIMP CONFIGS
 mailchimp.setConfig({
-    apiKey: key || "bd5b39b768b0c19749d58377132d7e00-us17",
-    server: server || "us17",
+    apiKey: key,
+    server: server,
 });
 
-const listId = list || "e7df3b715c";
+const listId = list;
 
 // -- TEST MAILCHIMP
 async function testMailchimp() {
